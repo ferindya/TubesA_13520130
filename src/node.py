@@ -10,10 +10,9 @@ class Node:
         self.value = 0
         
     def calculate_net(self, input):
-        net_array = np.concatenate(([1], input[0]),)
-        self.net = np.dot(self.weight, net_array)
+        net_array = np.concatenate(([1], input),)
+        self.net = np.dot(self.weight,net_array)
         return self.net
-        
         
     def activate_neuron(self, sum = None):
         if (self.name != "softmax"):
@@ -21,6 +20,10 @@ class Node:
         else:
             self.value = self.activation_function(self.net, sum)
         return self.value
+    
+    def restart_neuron(self):
+        self.net = 0
+        self.value = 0
     
     def __repr__ (self):
         print('Node ', self.name)

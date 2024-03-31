@@ -38,5 +38,5 @@ def open_json(file):
 if __name__ == "__main__":
     file_name = file_name(str(input("Masukin namfel:")))
     #file_name = '../models/relu.json'
-    jadinya = open_json(file_name)
-    print(jadinya)
+    case, expect = open_json(file_name)
+    print(case)
