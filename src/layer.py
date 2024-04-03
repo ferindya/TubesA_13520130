@@ -22,6 +22,7 @@ class Layer:
         self.name = name
         self.n_neuron = int(n_neuron)
         self.activation_function = activation_function[activation]
+        self.activation_function_name = activation
         self.value = []
         self.net = []
         self.node = []
@@ -29,7 +30,7 @@ class Layer:
     
     def generate(self):
         for i in range(self.n_neuron):
-            self.node.append(Node(1, self.weight[i], self.activation_function, i+1))
+            self.node.append(Node(1, self.weight[i], self.activation_function, f'{self.name},{i+1}'))
 
     def activate_layer(self, input):
         if self.activation_function == softmax:

@@ -11,11 +11,12 @@ def file_name(path):
     if os.path.isfile(path):
         return path
     else:
-        if os.path.isfile('../test/'+path):
-            return '../test/'+path
+        if os.path.isfile('test/'+path):
+            return 'test/'+path
         else:
-            print("Incorrect file name")
-            return False
+            current_dir = os.path.dirname(__file__)
+            module_dir = os.path.join(current_dir, '..', 'test', path)
+            return module_dir
 
 def open_json(file):
     '''Fungsi input untuk mengelola masukan file JSON

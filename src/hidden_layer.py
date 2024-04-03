@@ -4,7 +4,7 @@ from src.layer import Layer
 class HiddenLayer:
     def __init__(self, layers, weights):
         self.n_layers = len(layers)
-        self.n_output = layers[self.n_layers-1]
+        self.n_output = layers[self.n_layers-1].get("number_of_neurons")
 
         self.layer_sizes=np.zeros(self.n_layers)
         # Update layer size
@@ -23,7 +23,7 @@ class HiddenLayer:
                 self.layers[i].activate_layer(input)
             else:
                 self.layers[i].activate_layer(self.layers[i-1].value)
-        return self.layers[-1]
+        #return self.layers[-1]
 
     def restart_hidden_layer(self):
         for i in range(self.n_layers):

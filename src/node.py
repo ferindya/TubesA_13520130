@@ -1,4 +1,5 @@
 import numpy as np
+from src.activation import softmax
 
 class Node:
     def __init__(self, bias, weight, activation_function, name):
@@ -15,7 +16,6 @@ class Node:
         return self.net
         
     def activate_neuron(self, sum = None):
-        from activation import softmax
         if (self.activation_function != softmax):
             self.value = self.activation_function(self.net)
         else:
