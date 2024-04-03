@@ -11,8 +11,8 @@ def file_name(path):
     if os.path.isfile(path):
         return path
     else:
-        if os.path.isfile('../models/'+path):
-            return '../models/'+path
+        if os.path.isfile('../test/'+path):
+            return '../test/'+path
         else:
             print("Incorrect file name")
             return False

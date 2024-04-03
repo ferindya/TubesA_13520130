@@ -1,5 +1,5 @@
 import numpy as np
-from layer import Layer
+from src.layer import Layer
 
 class HiddenLayer:
     def __init__(self, layers, weights):

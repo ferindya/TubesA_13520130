@@ -15,7 +15,8 @@ class Node:
         return self.net
         
     def activate_neuron(self, sum = None):
-        if (self.name != "softmax"):
+        from activation import softmax
+        if (self.activation_function != softmax):
             self.value = self.activation_function(self.net)
         else:
             self.value = self.activation_function(self.net, sum)
@@ -24,6 +25,9 @@ class Node:
     def restart_neuron(self):
         self.net = 0
         self.value = 0
+    
+    def update_net(self, input):
+        self.net = input
     
     def __repr__ (self):
         print('Node ', self.name)

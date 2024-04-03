@@ -22,9 +22,9 @@ def sigmoid(net, derivative=False):
     
 def softmax(net, numOfNet, derivative=False):
     sigma = 0
-    fsoftmax = np.exp(net) / sigma
     for i in range (len(numOfNet)):
         sigma += np.exp(numOfNet[i])
+    fsoftmax = np.exp(net) / sigma
     if derivative:
         return fsoftmax * (1 - fsoftmax)
     else:

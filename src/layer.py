@@ -1,7 +1,7 @@
 import os
 import sys
-from activation import linear, relu, sigmoid, softmax
-from node import Node
+from src.activation import linear, relu, sigmoid, softmax
+from src.node import Node
 import numpy as np
 
 current_dir = os.path.dirname(__file__)
@@ -32,9 +32,16 @@ class Layer:
             self.node.append(Node(1, self.weight[i], self.activation_function, i+1))
 
     def activate_layer(self, input):
-        for i in range(self.n_neuron):
-            self.net.append(self.node[i].calculate_net(input))
-            self.value.append(self.node[i].activate_neuron())
+        if self.activation_function == softmax:
+            for i in range(self.n_neuron):
+                self.net.append(self.node[i].calculate_net(input))
+            for i in range(self.n_neuron):
+                self.node[i].update_net(self.net[i])
+                self.value.append(self.node[i].activate_neuron(self.net))
+        else:
+            for i in range(self.n_neuron):
+                self.net.append(self.node[i].calculate_net(input))
+                self.value.append(self.node[i].activate_neuron())
     
     def restart_layer(self):
         self.value = []
