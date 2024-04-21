@@ -1,7 +1,9 @@
 import os
 import sys
-from src.activation import linear, relu, sigmoid, softmax
-from src.node import Node
+# from src.activation import linear, relu, sigmoid, softmax
+# from src.node import Node
+from activation import linear, relu, sigmoid, softmax
+from node import Node
 import numpy as np
 
 current_dir = os.path.dirname(__file__)
@@ -55,6 +57,7 @@ class Layer:
         print('')
         for i in range(self.n_neuron):
             print(self.node[i])
+        print('Output: ', self.value)
         return ''
     
 if __name__ == "__main__":

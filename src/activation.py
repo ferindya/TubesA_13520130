@@ -16,16 +16,19 @@ def relu(net, derivative=False):
 def sigmoid(net, derivative=False):
     fsigmoid = (1 / (1 + np.exp(-net)))
     if derivative:
-        return fsigmoid * (1 - fsigmoid)
+        return net * (1 - net)
     else:
         return fsigmoid
     
-def softmax(net, numOfNet, derivative=False):
+def softmax(net, numOfNet, derivative=False, target=False):
     sigma = 0
     for i in range (len(numOfNet)):
         sigma += np.exp(numOfNet[i])
     fsoftmax = np.exp(net) / sigma
     if derivative:
-        return fsoftmax * (1 - fsoftmax)
+        if target == True:
+            return -(1-net)
+        else:
+            return net
     else:
         return fsoftmax
