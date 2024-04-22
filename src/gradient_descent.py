@@ -1,6 +1,8 @@
 import numpy as np
-from activation import linear, relu, sigmoid, softmax
-from loss_function import sse, cross_entropy
+from src.activation import linear, relu, sigmoid, softmax
+from src.loss_function import sse, cross_entropy
+# from activation import linear, relu, sigmoid, softmax
+# from loss_function import sse, cross_entropy
 
 def gd_o (target, output, input, weight, learning_rate, activation):
 
@@ -26,6 +28,7 @@ def gd_o (target, output, input, weight, learning_rate, activation):
         for i in range(len(weight[k])): #input
             for j in range(len(weight[k][i])):  #output
                 if (activation == "softmax"):
+                    #print(k,i,j,delta_w)
                     delta_w[k][i][j] += -learning_rate * activation_function(output[k][j], derivative=True) * input[k][i]
                 else:
                     delta_w[k][i][j] += -learning_rate * sse(target[k][j], output[k][j], True) * activation_function(output[k][j], derivative=True) * input[k][i]
@@ -50,9 +53,9 @@ def gd_h(output, input, gd_h1,  weight, weight_next, learning_rate, activation):
     delta_w = np.zeros_like(weight)
     #if (activation != "softmax"):
     for k in range(len(input)):
-        for i in range(len(weight[k])): #input
-            for j in range(len(weight[k][i])):  #output
-                delta_w[k][i][j] += learning_rate * np.dot(gd_h1[i] * activation_function(output[i][j], derivative=True),weight_next[i][j]) * input[k][i] 
+        for i in range(len(input)): #input
+            for j in range(len(input[i])):  #output
+                delta_w[k][i][j] += learning_rate * np.dot(gd_h1[i] * activation_function(output[i][j], derivative=True), weight_next[i][j]) * input[k][i] 
     
     return de_dw, delta_w
 

@@ -1,6 +1,5 @@
 import numpy as np
-#from src.activation import softmax
-from activation import softmax
+from src.activation import softmax
 
 class Node:
     def __init__(self, bias, weight, activation_function, name):

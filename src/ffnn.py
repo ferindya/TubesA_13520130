@@ -1,10 +1,11 @@
-#from src.hidden_layer import HiddenLayer
-#from src.gradient_descent import gd_h, gd_o
-#from src.loss_function import sse, cross_entropy
-from hidden_layer import HiddenLayer
-from gradient_descent import gd_h, gd_o
-from loss_function import sse, cross_entropy
-from input_json import file_name, open_json, create_json, update_json
+from src.hidden_layer import HiddenLayer
+from src.gradient_descent import gd_h, gd_o
+from src.loss_function import sse, cross_entropy
+from src.input_json import file_name, open_json, create_json, update_json
+# from hidden_layer import HiddenLayer
+# from gradient_descent import gd_h, gd_o
+# from loss_function import sse, cross_entropy
+# from input_json import file_name, open_json, create_json, update_json
 import copy
 import numpy as np
 
@@ -58,11 +59,17 @@ class FFNN:
 
                 for i in range(len(batch)):
                     output.append(batch[i].layers.layers[back_index].value)
-                    if (batch[0].nlayers > 1 and i != batch[0].nlayers-1):
-                        input.append([1] + batch[i].layers.layers[back_index-1].value)
-                    else:
-                        input.append(batch[i].layers.layers[back_index-1].value)
+                    #if (batch[0].nlayers > 0 and i != batch[0].nlayers -1):
+                    input.append([1] + batch[i].layers.layers[back_index-1].value)
+                    #else:
+                    #    input.append(batch[i].layers.layers[back_index-1].value)
                     weight_dim.append(weight[-1])
+                
+                print('output:', output)
+                print('input:', input)
+                print('weight_dim:', weight_dim)
+                #print('delta:', delta_all[-1])
+
                 delta, update = gd_o(target, output, input, weight_dim, learning_rate, activation)
                 to_update_weights = update[0]
                 for i in range(1, len(update)):
@@ -78,7 +85,7 @@ class FFNN:
                 
                 for j in range(len(batch)):
                     if (batch[0].nlayers > 1): #and i != batch[0].nlayers-1):
-                        input.append([1] + batch[j].layers.layers[back_index-1].value)
+                        input.append(batch[j].layers.layers[back_index-1].value)
                         output.append([1] + batch[j].layers.layers[back_index].value)
                     else:
                         input.append(batch[j].layers.layers[back_index-1].value)
@@ -86,11 +93,11 @@ class FFNN:
                     weight_dim.append(weight[back_index])
                     weight_dim_next.append(weight[back_index + 1])
 
-                # print('output:', output)
-                # print('input:', input)
-                # print('weight_dim:', weight_dim)
-                # print('weight_dim_next:', weight_dim_next)
-                # print('delta:', delta_all[-1])
+                print('output:', output)
+                print('input:', input)
+                print('weight_dim:', weight_dim)
+                print('weight_dim_next:', weight_dim_next)
+                print('delta:', delta_all[-1])
             
                 # Calculate delta and weight update for the hidden layer
                 delta, update = gd_h(output, input, delta_all[-1], weight_dim, weight_dim_next, learning_rate, activation)
@@ -156,8 +163,9 @@ class FFNN:
                         error += sse(case.get("target")[j][k], output_val[j][k])
                     mse += error
             mse /= output_val
+            print(mse)
             
-            if (error <= error_threshold):
+            if (mse <= error_threshold):
                 stopped_by == "error_threshold"
                 break
             else:
@@ -249,10 +257,10 @@ if __name__ == "__main__":
     # print(expect)
     #print(FFNN.f_sse(output, expect.get("output")))
 
-    #stopped_by, final_weights = FFNN.train('b_softmax_two_layer.json')
+    #stopped_by, final_weights = FFNN.train('b_softmax_two_layer.json') #aman
     #stopped_by, final_weights = FFNN.train('b_relu.json') #aman
-    #stopped_by, final_weights = FFNN.train('b_mlp.json')
-    #stopped_by, final_weights = FFNN.train('b_sigmoid.json')
+    #stopped_by, final_weights = FFNN.train('b_mlp.json') #
+    #stopped_by, final_weights = FFNN.train('b_sigmoid.json') #aman
     stopped_by, final_weights = FFNN.train('b_softmax.json')
     #stopped_by, final_weights = FFNN.train('b_linear.json') #aman
     #stopped_by, final_weights = FFNN.train('b_linear_small_lr.json') #aman

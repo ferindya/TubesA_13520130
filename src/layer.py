@@ -1,9 +1,9 @@
 import os
 import sys
-# from src.activation import linear, relu, sigmoid, softmax
-# from src.node import Node
-from activation import linear, relu, sigmoid, softmax
-from node import Node
+from src.activation import linear, relu, sigmoid, softmax
+from src.node import Node
+# from activation import linear, relu, sigmoid, softmax
+# from node import Node
 import numpy as np
 
 current_dir = os.path.dirname(__file__)
