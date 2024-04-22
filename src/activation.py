@@ -20,15 +20,12 @@ def sigmoid(net, derivative=False):
     else:
         return fsigmoid
     
-def softmax(net, numOfNet, derivative=False, target=False):
-    sigma = 0
-    for i in range (len(numOfNet)):
-        sigma += np.exp(numOfNet[i])
-    fsoftmax = np.exp(net) / sigma
+def softmax(net, numOfNet=1, derivative=False, target=False):
     if derivative:
-        if target == True:
-            return -(1-net)
-        else:
-            return net
+        return net * (1 - net)
     else:
+        sigma = 0
+        for i in range (len(numOfNet)):
+            sigma += np.exp(numOfNet[i])
+        fsoftmax = np.exp(net) / sigma
         return fsoftmax
